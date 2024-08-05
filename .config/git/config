@@ -1,0 +1,6 @@
+[core]
+	editor = nvim
+[init]
+	defaultBranch = main
+[include]
+	path = ~/.config/git/config.local
