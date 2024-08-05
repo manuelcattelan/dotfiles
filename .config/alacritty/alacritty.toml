@@ -1,0 +1,13 @@
+# Alacritty's config file.
+# For more information, see https://alacritty.org/config-alacritty.html.
+
+# To install a new font download the corresponding zip file and unzip it by
+# running unzip path/to/zipped/font -d ~/.local/share/fonts/{font-name}, then
+# run fc-cache -fv and ensure the font is correctly detected by the system
+# by running fc-list | grep {font-name}.
+[font]
+normal      = { family = "JetBrainsMonoNL Nerd Font Mono", style = "Regular"     }
+italic      = { family = "JetBrainsMonoNL Nerd Font Mono", style = "Italic"      }
+bold        = { family = "JetBrainsMonoNL Nerd Font Mono", style = "Bold"        }
+bold_italic = { family = "JetBrainsMonoNL Nerd Font Mono", style = "Bold Italic" }
+size        = 10
