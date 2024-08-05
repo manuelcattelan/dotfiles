@@ -1,0 +1,3 @@
+[submodule ".config/zsh/plugins/promptly"]
+	path = .config/zsh/plugins/promptly
+	url = git@github.com:manuelcattelan/promptly.git
