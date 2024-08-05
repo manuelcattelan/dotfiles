@@ -6,19 +6,42 @@ return {
     { "WhoIsSethDaniel/mason-tool-installer.nvim" },
     { "j-hui/fidget.nvim", opts = {} },
   },
-  opts = {
-    diagnostics = {
-      underline = false,
-      virtual_text = false,
-      float = { border = "rounded" },
-      update_in_insert = false,
-      severity_sort = true,
-    },
-    servers = {
-      bashls = {},
-      lua_ls = {},
-    },
-  },
+  opts = function()
+    local mason_registry = require("mason-registry")
+    local mason_vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()
+      .. "/node_modules/@vue/language-server"
+
+    return {
+      diagnostics = {
+        underline = false,
+        virtual_text = false,
+        float = { border = "rounded" },
+        update_in_insert = false,
+        severity_sort = true,
+      },
+      servers = {
+        bashls = {},
+        lua_ls = {},
+        tsserver = {
+          init_options = {
+            plugins = {
+              {
+                name = "@vue/typescript-plugin",
+                location = mason_vue_language_server_path,
+                languages = { "vue" },
+              },
+            },
+            preferences = {
+              -- other preferences...
+              importModuleSpecifierPreference = "relative",
+              importModuleSpecifierEnding = "minimal",
+            },
+          },
+          filetypes = { "typescript", "javascript", "vue" },
+        },
+      },
+    }
+  end,
   config = function(_, opts)
     local utils = require("mcattelan.utils")
 

@@ -5,6 +5,10 @@ return {
       sh = { "beautysh" },
       zsh = { "beautysh" },
       lua = { "stylua" },
+
+      javascript = { "prettierd" },
+      typescript = { "prettierd" },
+      vue = { "prettierd" },
     },
     format_on_save = {
       -- These options will be passed to conform.format()
