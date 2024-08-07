@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+function echo_script_usage {
+    echo "Usage: $(basename "$0") <offset/toggle>"
+    echo "Increase/decrease sink volume by a percentage offset N or toggle mute."
+    echo
+    echo "offset:"
+    echo "  +N%     Increases sink volume by N% from current value, where N is any integer value."
+    echo "  -N%     Decreases sink volume by N% from current value, where N is any integer value."
+    echo
+    echo "toggle:"
+    echo "  toggle (when unmuted)  Mute sink volume"
+    echo "  toggle (when muted)    Unmute sink volume"
+    echo
+    echo "Examples:"
+    echo "  $(basename "$0") +10%"
+    echo "  $(basename "$0") -10%"
+    echo "  $(basename "$0") toggle"
+
+    exit 1
+}
+
+if [ -n "$1" ] && ([ "$1" == "toggle" ] || [[ "$1" =~ ^[+-][0-9]+%$ ]]); then
+    if [ "$1" == "toggle" ]; then
+        pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+        if echo "$(pactl get-sink-mute @DEFAULT_SINK@)" | grep -q "Mute: yes"; then
+            sink_volume_status="muted"
+        else
+            sink_volume_status="unmuted"
+        fi
+
+        dunstify "Volume tweaked!" "Volume is now $sink_volume_status." \
+            -u low -h string:x-dunst-stack-tag:volume
+    else
+        pactl set-sink-volume @DEFAULT_SINK@ $1
+
+        sink_volume_status=$(pactl get-sink-volume @DEFAULT_SINK@ \
+            | awk -F'[/: ]+' '/front-left:/ {print $4}')
+
+        dunstify "Volume tweaked!" "Volume is now at ~$sink_volume_status." \
+            -u low -h string:x-dunst-stack-tag:volume
+    fi
+else
+    echo_script_usage
+fi
