@@ -32,7 +32,7 @@ if [ -n "$1" ] && ([ "$1" == "toggle" ] || [[ "$1" =~ ^[+-][0-9]+%$ ]]); then
 
         dunstify "Volume tweaked!" "Volume is now $sink_volume_status." \
             -u low -h string:x-dunst-stack-tag:volume
-    elif [ $(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+(?=%)' | head -n 1) -lt 100 ]; then
+    else
         pactl set-sink-volume @DEFAULT_SINK@ $1
 
         sink_volume_value=$(pactl get-sink-volume @DEFAULT_SINK@ \
