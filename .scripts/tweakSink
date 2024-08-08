@@ -35,11 +35,32 @@ if [ -n "$1" ] && ([ "$1" == "toggle" ] || [[ "$1" =~ ^[+-][0-9]+%$ ]]); then
     else
         pactl set-sink-volume @DEFAULT_SINK@ $1
 
-        sink_volume_status=$(pactl get-sink-volume @DEFAULT_SINK@ \
-            | awk -F'[/: ]+' '/front-left:/ {print $4}')
+        sink_volume_value=$(pactl get-sink-volume @DEFAULT_SINK@ \
+            | grep -oP '\d+(?=%)' | head -n 1)
+        if echo "$(pactl get-sink-mute @DEFAULT_SINK@)" | grep -q "Mute: yes"; then
+            sink_volume_status="muted"
+        else
+            sink_volume_status="unmuted"
+        fi
 
-        dunstify "Volume tweaked!" "Volume is now at ~$sink_volume_status." \
-            -u low -h string:x-dunst-stack-tag:volume
+        if [ $sink_volume_status == "muted" ] && [ $sink_volume_value -gt 0 ]; then
+            pactl set-sink-mute @DEFAULT_SINK@ false
+            # We do not need to explicitly set the sink volume since by
+            # toggling `mute` to false, pactl already sets it for us.
+            # pactl set-sink-volume @DEFAULT_SINK@ $1
+
+            dunstify "Volume tweaked!" "Volume is now unmuted at ~$sink_volume_value%." \
+                -u low -h string:x-dunst-stack-tag:volume
+        elif [ $sink_volume_status == "unmuted" ] && [ $sink_volume_value -eq 0 ]; then
+            pactl set-sink-mute @DEFAULT_SINK@ true
+            pactl set-sink-volume @DEFAULT_SINK@ $1
+
+            dunstify "Volume tweaked!" "Volume is now muted." \
+                -u low -h string:x-dunst-stack-tag:volume
+        else
+            dunstify "Volume tweaked!" "Volume is now at ~$sink_volume_value%." \
+                -u low -h string:x-dunst-stack-tag:volume
+        fi
     fi
 else
     echo_script_usage
