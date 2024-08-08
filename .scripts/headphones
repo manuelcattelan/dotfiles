@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-function echo_script_usage {
+# Function to display script usage
+echo_script_usage() {
     echo "Usage: $(basename "$0") <mode>"
     echo "Connect/disconnect bluetooth headphone with specified mode."
     echo
@@ -17,53 +18,49 @@ function echo_script_usage {
     exit 1
 }
 
+# Connect or disconnect bluetooth headphones based on the provided mode
 if [ "$1" == "on" ]; then
-    # Bluetooth MAC address of headphones to connect to.
-    HEADPHONES_MAC="B8:81:FA:AF:06:0D"
+    # Bluetooth MAC address of headphones to connect to
+    headphones_mac="B8:81:FA:AF:06:0D"
+    # Bluetooth input card, source, and profile of headphones to connect to
+    headphones_input_card="bluez_card.B8_81_FA_AF_06_0D"
 
-    # Bluetooth input card, source and profile of headphones to connect to.
-    HEADPHONES_INPUT_CARD="bluez_card.B8_81_FA_AF_06_0D"
-
-    # Set different input profile based on requirements:
-    #   - audio: better output quality but input not available
-    #   - microphone: worse output quality but input available
+    # Set different input profile based on requirements
     if [ "$2" == "audio" ]; then
-        HEADPHONES_INPUT_SOURCE="bluez_sink.B8_81_FA_AF_06_0D.a2dp_sink.monitor"
-        HEADPHONES_INPUT_PROFILE="a2dp_sink"
+        headphones_input_source="bluez_sink.B8_81_FA_AF_06_0D.a2dp_sink.monitor"
+        headphones_input_profile="a2dp_sink"
     elif [ "$2" == "microphone" ]; then
-        HEADPHONES_INPUT_SOURCE="bluez_source.B8_81_FA_AF_06_0D.handsfree_head_unit"
-        HEADPHONES_INPUT_PROFILE="handsfree_head_unit"
+        headphones_input_source="bluez_source.B8_81_FA_AF_06_0D.handsfree_head_unit"
+        headphones_input_profile="handsfree_head_unit"
     else
         echo_script_usage
     fi
 
-    # Power on bluetooth.
+    # Power on bluetooth
     bluetoothctl power on
 
-    # Connect and trust headphones via MAC address.
-    bluetoothctl connect "$HEADPHONES_MAC"
-    bluetoothctl trust "$HEADPHONES_MAC"
+    # Connect and trust headphones via MAC address
+    bluetoothctl connect "$headphones_mac"
+    bluetoothctl trust "$headphones_mac"
 
-    # Required for Bluetooth changes to take effect and allows the pactl's CLI
-    # to find the correct references for card profiles and input sources.
+    # Allow the changes to take effect
     sleep 1
 
-    # Switch to Bluetooth headphones' input profile and source (microphone).
-    pactl set-card-profile "$HEADPHONES_INPUT_CARD" "$HEADPHONES_INPUT_PROFILE"
-    pactl set-default-source "$HEADPHONES_INPUT_SOURCE"
+    # Switch to the appropriate input profile and source
+    pactl set-card-profile "$headphones_input_card" "$headphones_input_profile"
+    pactl set-default-source "$headphones_input_source"
 elif [ "$1" == "off" ]; then
-    # Default input source to connect to.
-    DEFAULT_INPUT_SOURCE="alsa_input.pci-0000_64_00.6.HiFi__Mic1__source"
+    # Default input source to connect to
+    default_input_source="alsa_input.pci-0000_64_00.6.HiFi__Mic1__source"
 
-    # Power off bluetooth.
+    # Power off bluetooth
     bluetoothctl power off
 
-    # Required for Bluetooth changes to take effect and allows the pactl's CLI
-    # to find the correct references for input sources.
+    # Allow the changes to take effect
     sleep 1
 
-    # Switch to default input source (microphone).
-    pactl set-default-source "$DEFAULT_INPUT_SOURCE"
+    # Switch to the default input source
+    pactl set-default-source "$default_input_source"
 else
     echo_script_usage
 fi

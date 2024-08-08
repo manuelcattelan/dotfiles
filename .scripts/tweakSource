@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-function echo_script_usage {
+# Function to display script usage
+echo_script_usage() {
     echo "Usage: $(basename "$0") <toggle>"
     echo "Toggle source volume mute."
     echo
@@ -14,6 +15,7 @@ function echo_script_usage {
     exit 1
 }
 
+# Toggle the source volume mute state
 if [ -n "$1" ] && [ "$1" == "toggle" ]; then
     pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
