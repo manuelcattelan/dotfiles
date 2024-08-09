@@ -27,6 +27,11 @@ return {
       preview = {
         hide_on_startup = true,
       },
+      borderchars = {
+        prompt = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+        results = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+        preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+      },
       mappings = {
         i = {
           ["<C-h>"] = function(...)

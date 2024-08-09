@@ -8,7 +8,7 @@ return {
         package_pending = "➜",
         package_uninstalled = "✗",
       },
-      border = "rounded",
+      border = "single",
     },
   },
   config = function(_, opts)

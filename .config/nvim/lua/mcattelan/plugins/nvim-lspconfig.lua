@@ -15,7 +15,7 @@ return {
       diagnostics = {
         underline = false,
         virtual_text = false,
-        float = { border = "rounded" },
+        float = { border = "single" },
         update_in_insert = false,
         severity_sort = true,
       },
@@ -67,12 +67,12 @@ return {
 
     vim.diagnostic.config(opts.diagnostics)
     vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-      border = "rounded",
+      border = "single",
     })
     vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-      border = "rounded",
+      border = "single",
     })
-    require("lspconfig.ui.windows").default_options = { border = "rounded" }
+    require("lspconfig.ui.windows").default_options = { border = "single" }
 
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())

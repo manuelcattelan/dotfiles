@@ -29,8 +29,8 @@ return {
         { name = "path" },
       },
       window = {
-        completion = cmp.config.window.bordered({ scrollbar = false }),
-        documentation = cmp.config.window.bordered({ scrollbar = false }),
+        completion = cmp.config.window.bordered({ border = "single", scrollbar = false }),
+        documentation = cmp.config.window.bordered({ border = "single", scrollbar = false }),
       },
       enabled = function()
         -- disable completion in prompt buffers

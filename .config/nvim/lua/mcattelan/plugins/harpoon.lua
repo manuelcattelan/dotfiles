@@ -5,10 +5,7 @@ return {
   -- stylua: ignore
   keys = function()
     local harpoon = require("harpoon")
-    local harpoon_menu_options = {
-      border = "rounded",
-      title_pos = "center",
-    }
+    local harpoon_menu_options = { title_pos = "center" }
 
     local keys = {
       { "<leader>H", function() harpoon.ui:toggle_quick_menu(harpoon:list(), harpoon_menu_options) end, desc = "Open [H]arpoon Menu" },
