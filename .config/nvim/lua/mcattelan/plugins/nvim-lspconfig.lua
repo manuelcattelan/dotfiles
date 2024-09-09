@@ -22,7 +22,7 @@ return {
       servers = {
         bashls = {},
         lua_ls = {},
-        tsserver = {
+        ts_ls = {
           init_options = {
             plugins = {
               {
@@ -87,7 +87,6 @@ return {
       function(server_name)
         local server = opts.servers[server_name] or {}
         server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-        server_name = server_name == "tsserver" and "ts_ls" or server_name
         require("lspconfig")[server_name].setup(server)
       end,
     }
