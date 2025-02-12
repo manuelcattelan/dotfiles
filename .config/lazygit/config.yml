@@ -1,0 +1,4 @@
+keybinding:
+  universal:
+    prevBlock: <c-p>
+    nextBlock: <c-n>
