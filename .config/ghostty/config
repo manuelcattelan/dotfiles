@@ -7,3 +7,6 @@ cursor-style = "block"
 cursor-style-blink = "false"
 # See https://ghostty.org/docs/config/reference#shell-integration-features
 shell-integration-features = "no-cursor"
+
+# See https://ghostty.org/docs/config/reference#theme
+theme = "tokyonight_night"
