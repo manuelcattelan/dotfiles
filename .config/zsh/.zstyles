@@ -1,0 +1,8 @@
+#!/bin/zsh
+
+# Set names for Antidote plugins files.
+zstyle ':antidote:static' file ${ZDOTDIR:-~}/.zplugins.zsh
+zstyle ':antidote:bundle' file ${ZDOTDIR:-~}/.zplugins
+
+# Set names for Antidote plugins to be easier to read.
+zstyle ':antidote:bundle' use-friendly-names 'yes'

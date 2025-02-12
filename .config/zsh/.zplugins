@@ -1,0 +1,14 @@
+#!/bin/zsh
+
+mattmc3/zephyr path:plugins/completion
+mattmc3/zephyr path:plugins/history
+mattmc3/zshrc.d
+
+$ZDOTDIR/plugins/editor
+$ZDOTDIR/plugins/aliases
+$ZDOTDIR/plugins/keybindings
+
+zdharma-continuum/fast-syntax-highlighting kind:defer
+
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-history-substring-search

@@ -1,0 +1,13 @@
+# Disable the blank line at the start of the prompt
+#   See https://starship.rs/config/#prompt
+add_newline = false
+
+# The line_break module separates the prompt into two lines.
+#   See https://starship.rs/config/#line-break
+[line_break]
+disabled = true
+
+# The gcloud module shows the current configuration for gcloud CLI.
+#   See https://starship.rs/config/#google-cloud-gcloud
+[gcloud]
+disabled = true

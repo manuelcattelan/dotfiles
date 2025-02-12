@@ -1,1 +1,9 @@
 .config/git/config.local
+
+.config/zsh/.antidote
+.config/zsh/.zplugins.zsh
+.config/zsh/.zcompdump
+
+.config/zsh/*.local*
+.config/zsh/conf.d/*.local*
+.config/zsh/plugins/*.local*
